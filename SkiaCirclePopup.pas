@@ -17,11 +17,14 @@
 unit SkiaCirclePopup;
 
 interface
+
 uses
   Winapi.Windows,
   System.SysUtils, System.Classes, System.Types, System.UITypes, System.Math,
-  Vcl.Forms, Vcl.Graphics, Vcl.Controls, Vcl.ExtCtrls, System.IOUtils,
-  Vcl.Skia, Skia, Skia.API, vcl.Imaging.pngimage, vcl.Imaging.jpeg ;
+  System.IOUtils,
+  Vcl.Forms, Vcl.Graphics, Vcl.Controls, Vcl.ExtCtrls,
+  Vcl.Imaging.pngimage, Vcl.Imaging.jpeg,
+  Vcl.Skia, Skia, Skia.API;
 
 type
   TCirclePopupClickEvent = procedure(Sender: TObject; SegmentIndex: Integer; const SegmentText: string) of object;
@@ -66,7 +69,7 @@ implementation
 
 constructor TSkiaCirclePopup.Create(AOwner: TComponent);
 begin
-  inherited Create(AOwner);
+  inherited;
   FSegmentText := TStringList.Create;
 end;
 
@@ -79,7 +82,7 @@ begin
   end;
   FBuffer.Free;
   FSegmentText.Free;
-  inherited Destroy;
+  inherited;
 end;
 
 procedure TSkiaCirclePopup.CreatePopupForm(StartX, StartY: Integer);
@@ -116,7 +119,6 @@ begin
   begin
     FBuffer := TBitmap.Create;
     FBuffer.PixelFormat := pf32bit;
-    // DO NOT use afDefined! We want VCL to ignore the alpha and just look at RGB.
     FBuffer.AlphaFormat := afIgnored;
   end;
   FBuffer.SetSize(FPopupForm.ClientWidth, FPopupForm.ClientHeight);
@@ -155,6 +157,7 @@ begin
   FHoverIndex := -1;
   FGapAngle := 6;
   FSegmentText.Clear;
+  
   for I := Low(SegmentText) to High(SegmentText) do
     FSegmentText.Add(SegmentText[I]);
 
@@ -190,11 +193,8 @@ begin
   if Assigned(Surface) then
   begin
     Canvas := Surface.Canvas;
-
-    // 1. Fuchsia background!
     Canvas.Clear(TAlphaColors.Fuchsia);
 
-    // 2. Draw the simple gray circle
     OuterRect := TRectF.Create(FCenter.X - FOuterRadius, FCenter.Y - FOuterRadius,
                                FCenter.X + FOuterRadius, FCenter.Y + FOuterRadius);
 
@@ -205,9 +205,6 @@ begin
 
     Canvas.DrawOval(OuterRect, Paint);
 
-    // ==========================================
-    // 3. DRAW THE SPLIT LINES (GAPS)
-    // ==========================================
     SegmentAngle := (360 - FGapAngle * FSegmentCount) / FSegmentCount;
     TotalCycle := SegmentAngle + FGapAngle;
 
@@ -233,9 +230,6 @@ begin
       Canvas.DrawPath(Path, Paint);
     end;
 
-    // ==========================================
-    // 4. PUNCH THE MIDDLE HOLE
-    // ==========================================
     InnerRect := TRectF.Create(FCenter.X - FInnerRadius, FCenter.Y - FInnerRadius,
                                FCenter.X + FInnerRadius, FCenter.Y + FInnerRadius);
 
@@ -244,9 +238,6 @@ begin
 
     Canvas.DrawOval(InnerRect, Paint);
 
-    // ==========================================
-    // 5. DRAW THE TEXT (Perfectly Centered)
-    // ==========================================
     SkStyle := TSkFontStyle.Normal;
     SkTypeface := TSkTypeface.MakeFromName('Tahoma', SkStyle);
     SkFont := TSkFont.Create(SkTypeface, 11);
@@ -254,8 +245,6 @@ begin
     Paint.Style := TSkPaintStyle.Fill;
     Paint.Color := TAlphaColors.Aqua;
 
-
-    // Prepare VCL Canvas to measure text
     if Assigned(FPopupForm) then
     begin
       FPopupForm.Canvas.Font.Name := 'Tahoma';
@@ -274,20 +263,16 @@ begin
         TextPos.X := FCenter.X + R * Cos(DegToRad(MidAngle));
         TextPos.Y := FCenter.Y + R * Sin(DegToRad(MidAngle));
 
-        // --- THE FIX: Use Windows API to measure text width ---
         if Assigned(FPopupForm) then
         begin
           GetTextExtentPoint32(FPopupForm.Canvas.Handle, PChar(FSegmentText[I]), Length(FSegmentText[I]), TextSize);
-          TextPos.X := TextPos.X - (TextSize.cx / 2); // Shift left by half the width
+          TextPos.X := TextPos.X - (TextSize.cx / 2);
         end;
 
         Canvas.DrawSimpleText(FSegmentText[I], TextPos.X, TextPos.Y + (7 * 0.3), SkFont, Paint);
       end;
     end;
 
-    // ==========================================
-    // 6. SAVE TO MEMORY AND LOAD
-    // ==========================================
     SkImage := Surface.MakeImageSnapshot;
     if Assigned(SkImage) then
     begin
