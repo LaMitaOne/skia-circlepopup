@@ -2,17 +2,26 @@
 
 SkiaCirclePopup   
 
-<img width="403" height="301" alt="Unbenannt" src="https://github.com/user-attachments/assets/99a17eb5-36db-465b-a86d-4cddeb384964" />
-   
-Very early proof-of-concept (Alpha 0.1). A floating circular popup menu rendered via Skia4Delphi instead of standard VCL canvas.    
-
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/LaMitaOne/skia-circlepopup)
-     
-    
-First lifesign and looks promising, but absolutely NOT finished. We got it drawing and functioning, which is great, but let's be real: the graphics are still far from crisp. We are currently fighting horrible edge halos and anti-aliasing dirt because of a messy VCL/Alpha workaround we had to use to even get it to show up transparently.    
-Still having lots Delphi 7 habits...but sure theres better ways...ill find it   
+  
 
-    
-So yes, Skia renders it and it looks slightly less horrible than a pure VCL attempt, but it's still not where it needs to be. Could definitely make something good out of this     with more work, but don't expect a polished component yet.    
-    
-See the included sample project to test it.    
+<img width="384" height="271" alt="Unbenannt" src="https://github.com/user-attachments/assets/41a703f2-af4c-403e-93b8-8aa794333571" />
+   
+A floating, circular popup menu for Delphi VCL, rendered entirely via Skia4Delphi. 
+
+Bypasses standard VCL limitations by using the Windows UpdateLayeredWindow API combined with Skia to deliver a smooth, anti-aliased radial menu with true per-pixel alpha transparency and soft drop shadows. No clFuchsia masking, no jagged edges, no flickering.
+Features
+
+    True Anti-Aliasing & Alpha: Flawless per-pixel transparency via WS_EX_LAYERED.
+    Drop Shadows: Genuine, soft drop shadows rendered via Skia ImageFilter.
+    Zero Flicker: Rendered off-screen and pushed directly to the Windows Compositor.
+    Hover States: Segments change color on mouse hover.
+    Straight Text: Text is kept perfectly horizontal for maximum readability.
+
+Requirements
+
+    Delphi (10.3 Rio or newer recommended)
+    Skia4Delphi must be installed.
+
+
+zipped exe and sample project included
