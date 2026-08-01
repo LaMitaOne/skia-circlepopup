@@ -7,7 +7,7 @@ A floating, circular popup menu for Delphi VCL, rendered entirely via Skia4Delph
     
 Bypasses standard VCL limitations by using the Windows UpdateLayeredWindow API combined with Skia to deliver a smooth, anti-aliased radial menu with true per-pixel alpha transparency and soft drop shadows. No clFuchsia masking, no jagged edges, no flickering.    
      
-Features    
+Features v0.2 alpha   
 
     True Anti-Aliasing & Alpha: Flawless per-pixel transparency via WS_EX_LAYERED.
     Drop Shadows: Genuine, soft drop shadows rendered via Skia ImageFilter.
