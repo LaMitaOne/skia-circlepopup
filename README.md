@@ -20,4 +20,6 @@ Requirements
     Skia4Delphi must be installed.
      
 
-zipped exe and sample project included
+zipped exe and sample project included   
+    
+Now it's slowly looking bit better than d7 vcl version 🙃 
