@@ -13,7 +13,6 @@ Features v0.2 alpha
     Drop Shadows: Genuine, soft drop shadows rendered via Skia ImageFilter.
     Zero Flicker: Rendered off-screen and pushed directly to the Windows Compositor.
     Hover States: Segments change color on mouse hover.
-    Straight Text: Text is kept perfectly horizontal for maximum readability.
     
 Requirements     
      
