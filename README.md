@@ -1,10 +1,8 @@
 # skia-circlepopup  
-
-SkiaCirclePopup   
-
+A floating, circular popup menu for Delphi VCL, rendered entirely via Skia4Delphi.
+   
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/LaMitaOne/skia-circlepopup)
-  
-
+    
 <img width="384" height="271" alt="Unbenannt" src="https://github.com/user-attachments/assets/41a703f2-af4c-403e-93b8-8aa794333571" />
    
 A floating, circular popup menu for Delphi VCL, rendered entirely via Skia4Delphi. 
