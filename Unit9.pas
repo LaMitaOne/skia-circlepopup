@@ -5,6 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.Imaging.pngimage, Vcl.Imaging.jpeg, System.UITypes,
   Vcl.StdCtrls, SkiaCirclePopup;
 
 type
@@ -46,17 +47,15 @@ begin
   Popup := TSkiaCirclePopup.Create(nil);
   Popup.ShowSkiaCirclePopup(Mouse.CursorPos.X,    // X
     Mouse.CursorPos.Y,    // Y
-    20,                   // InnerRadius
-    60,                   // OuterRadius
-    clGray,              // SegmentColor
-    clAqua,               // HoverColor
-    TColor($00333300),    // BorderColor
-    clBlack,               // TextColor
+    20,                   // InnerRadius (vorher 20)
+    90,                   // OuterRadius (vorher 60)
+    TAlphaColors.Aliceblue, // SegmentColor
+    TAlphaColors.Aqua,      // HoverColor
+    TAlphaColors.Black,     // BorderColor
+    TAlphaColors.Blueviolet,// TextColor
     6,                    // SegmentCount
     Items,                // SegmentText
     HandleSegmentClick);  // OnClick
-
-
 end;
 
 end.
