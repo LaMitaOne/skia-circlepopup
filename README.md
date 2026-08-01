@@ -22,4 +22,6 @@ Requirements
 
 zipped exe and sample project included   
     
-Now it's slowly looking bit better than d7 vcl version 🙃 
+Now it's slowly looking bit better than d7 vcl version 🙃    
+     
+Skia cubes popup https://github.com/LaMitaOne/SkiaCubesPopup 
