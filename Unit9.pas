@@ -43,7 +43,6 @@ begin
   Items[3] := '70%';
   Items[4] := '90%';
   Items[5] := '100%';
-
   Popup := TSkiaCirclePopup.Create(nil);
   Popup.ShowSkiaCirclePopup(Mouse.CursorPos.X,    // X
     Mouse.CursorPos.Y,    // Y
