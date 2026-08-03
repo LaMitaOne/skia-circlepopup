@@ -3,16 +3,19 @@ A floating, circular popup menu for Delphi VCL, rendered entirely via Skia4Delph
    
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/LaMitaOne/skia-circlepopup)
     
-<img width="384" height="271" alt="Unbenannt" src="https://github.com/user-attachments/assets/41a703f2-af4c-403e-93b8-8aa794333571" />
+<img width="360" height="202" alt="circle" src="https://github.com/user-attachments/assets/dc4dbfb8-49e5-491a-8b17-f74be945c374" />
+
+Sample video: 
     
 Bypasses standard VCL limitations by using the Windows UpdateLayeredWindow API combined with Skia to deliver a smooth, anti-aliased radial menu with true per-pixel alpha transparency and soft drop shadows. No clFuchsia masking, no jagged edges, no flickering.    
      
-Latest Changes:   
+Latest Changes: https://youtu.be/Pr-IEDD7OKU  
 
    v 0.3:
    
     Per-Segment color hot tracking! Each segment fades individually.   
     Added smooth Fade-In and Fade-Out animations (Show/Close)   
+         
    v 0.2:
    
     True Anti-Aliasing & Alpha: Flawless per-pixel transparency via WS_EX_LAYERED.   
