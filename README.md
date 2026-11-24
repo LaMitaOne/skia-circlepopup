@@ -10,7 +10,11 @@ Sample video: https://www.youtube.com/watch?v=Pr-IEDD7OKU
 Bypasses standard VCL limitations by using the Windows UpdateLayeredWindow API combined with Skia to deliver a smooth, anti-aliased radial menu with true per-pixel alpha transparency and soft drop shadows. No clFuchsia masking, no jagged edges, no flickering.    
      
 Latest Changes: https://youtu.be/Pr-IEDD7OKU  
-
+     
+   v 0.4:
+   
+    No more png convert neeeded      
+         
    v 0.3:
    
     Per-Segment color hot tracking! Each segment fades individually.   
