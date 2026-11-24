@@ -3,11 +3,13 @@
 ********************************************************************************
   A floating circular popup menu rendered via Skia4Delphi
 *******************************************************************************}
-{ Skia-CirclePopup; v0.3                                                      }
+{ Skia-CirclePopup; v0.4                                                      }
 { by Lara Miriam Tamy Reschke                                                  }
 {                                                                              }
 {------------------------------------------------------------------------------}
 {
+   v 0.4:
+   - No more png convert needed
    v 0.3:
    - Per-Segment color hot tracking! Each segment fades individually.
    - Added smooth Fade-In and Fade-Out animations (Show/Close)
@@ -24,7 +26,7 @@ interface
 uses
   Winapi.Windows, System.SysUtils, System.Classes, System.Types, System.UITypes,
   System.Math, System.IOUtils, Vcl.Forms, Vcl.Graphics, Vcl.Controls,
-  Vcl.ExtCtrls, Vcl.Imaging.pngimage, Vcl.Imaging.jpeg, Vcl.Skia, Skia, Skia.API;
+  Vcl.ExtCtrls, Vcl.Imaging.jpeg, Vcl.Skia, Skia, Skia.API;
 
 type
   TCirclePopupClickEvent = procedure(Sender: TObject; SegmentIndex: Integer; const SegmentText: string) of object;
@@ -72,7 +74,6 @@ type
   end;
 
 implementation
-
 { TSkiaCirclePopup }
 
 constructor TSkiaCirclePopup.Create(AOwner: TComponent);
@@ -352,7 +353,6 @@ var
   TextPos: TPointF;
   TextSize: TSize;
   MemStream: TMemoryStream;
-  PngImage: TPngImage;
   PathBuilder: ISkPathBuilder;
   SegPath: ISkPath;
 begin
@@ -428,36 +428,12 @@ begin
         Canvas.DrawSimpleText(FSegmentText[I], TextPos.X, TextPos.Y, SkFont, Paint);
       end;
     end;
-    // Transfer Skia Surface to VCL Bitmap via PNG Stream
+    // Transfer Skia Surface to VCL Bitmap directly via Vcl.Skia
     SkImage := Surface.MakeImageSnapshot;
     if Assigned(SkImage) then
     begin
-      MemStream := TMemoryStream.Create;
-      try
-        if SkImage.EncodeToStream(MemStream, TSkEncodedImageFormat.PNG) then
-        begin
-          if MemStream.Size > 0 then
-          begin
-            MemStream.Position := 0;
-            PngImage := TPngImage.Create;
-            try
-              PngImage.LoadFromStream(MemStream);
-              FBuffer.Canvas.Lock;
-              try
-                FBuffer.Canvas.Brush.Color := clBlack;
-                FBuffer.Canvas.FillRect(FBuffer.Canvas.ClipRect);
-                FBuffer.Canvas.Draw(0, 0, PngImage);
-              finally
-                FBuffer.Canvas.Unlock;
-              end;
-            finally
-              PngImage.Free;
-            end;
-          end;
-        end;
-      finally
-        MemStream.Free;
-      end;
+      FBuffer.Free;
+      FBuffer := SkImageToBitmap(SkImage);
     end;
   end;
 end;
